@@ -7,6 +7,7 @@ import { Segment } from 'src/Domain/FlightSchedule/Entity/Segment';
 import { FlightSchedule } from 'src/Domain/FlightSchedule/FlightSchedule';
 import { FlightModule } from './flight.module';
 import { FlightController } from 'src/Controller/Flight/Flight';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -20,6 +21,9 @@ import { FlightController } from 'src/Controller/Flight/Flight';
       entities: [Flight, Reservation, Seat, FlightSchedule, Segment],
       synchronize: false,
     }),
+    ClientsModule.register([
+      {name: 'RABBIT_MQ', transport: Transport.RMQ}
+    ]),
     FlightModule,
   ],
   controllers: [],

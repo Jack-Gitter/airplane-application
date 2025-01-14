@@ -1,4 +1,5 @@
-import { BadRequestException, NotFoundException } from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
+import { BadRequestException, Inject, NotFoundException } from "@nestjs/common";
 import { InjectDataSource } from "@nestjs/typeorm";
 import { UUID } from "crypto";
 import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation";
@@ -8,7 +9,9 @@ import { DataSource } from "typeorm";
 
 export class ReserveSeatService {
 
-    public constructor(@InjectDataSource() private dataSource: DataSource) {}
+    public constructor(
+        @InjectDataSource() private dataSource: DataSource,
+    ) {}
 
     public async reserveSeat(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
 
@@ -38,15 +41,11 @@ export class ReserveSeatService {
 
             flight.reservations = reservations
 
-            /* 
-
-            const person = this.personService.doesPersonExist(personId)
-
+            /*const person = get person from other service
             if (!person) {
                 throw new BadRequestException(`person with id ${personId} does not exist`)
-            }
+            }*/
 
-            */
 
             const seatPosition = new SeatPosition(seatRow, seatCol)
 

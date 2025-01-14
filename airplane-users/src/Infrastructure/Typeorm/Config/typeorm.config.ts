@@ -1,5 +1,6 @@
-import { Person } from "src/Domain/Person/Person"
+import { Person } from "../../../Domain/Person/Person"
 import { DataSource } from "typeorm"
+import { Initial1736890878198 } from "../Migrations/1736890878198-initial"
 
 const dataSource = new DataSource({
       type: 'postgres',
@@ -9,7 +10,7 @@ const dataSource = new DataSource({
       password: 'postgres',
       database: 'postgres',
       entities: [Person],
-      migrations: [],
+      migrations: [Initial1736890878198],
       synchronize: false,
 })
 

@@ -22,7 +22,6 @@ export class FlightController {
             reserveSeatDTO.seatRow, 
             reserveSeatDTO.seatColumn
         )
-
     }
 
 }

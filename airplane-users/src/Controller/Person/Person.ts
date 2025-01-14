@@ -1,10 +1,13 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { CreatePersonService } from "src/Application/Person/CreatePersonService";
 import { CreatePersonDTO } from "./DTO/CreatePersonDTO";
+import { UUID } from "crypto";
+import { FindPersonDTO } from "./DTO/FindPersonDTO";
+import { FindPersonService } from "src/Application/Person/FindPersonService";
 
 @Controller('person')
 export class PersonController {
-    constructor(private createPersonService: CreatePersonService) {}
+    constructor(private createPersonService: CreatePersonService, private findPersonService: FindPersonService) {}
 
     @Post()
     public async createPerson(@Body() createPersonDTO: CreatePersonDTO) {
@@ -15,6 +18,11 @@ export class PersonController {
             createPersonDTO.emailPrefix,
             createPersonDTO.emailPostfix
         )
+    }
+
+    @Get(':id')
+    public async Person(@Param() findPersonDTO: FindPersonDTO) {
+        await this.findPersonService.findPerson(findPersonDTO.id)
     }
 
 }

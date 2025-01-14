@@ -10,7 +10,6 @@ export class ReserveSeatService {
 
     public constructor(@InjectDataSource() private dataSource: DataSource) {}
 
-    // we can simply query from the application layer, acting like its an external service
     public async reserveSeat(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
 
         await this.dataSource.transaction(async (entityManager) => {

@@ -20,7 +20,7 @@ export class Person {
         this.email = email
     }
 
-    public static CreateName(name: Name, email: Email): Person {
+    public static CreatePerson(name: Name, email: Email): Person {
         return new Person(name, email)
     }
 

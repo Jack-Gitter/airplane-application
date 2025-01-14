@@ -9,7 +9,7 @@ async function bootstrap() {
 
   app.connectMicroservice({
     transport: Transport.RMQ,
-    options: { host: '0.0.0.0', port: 5000 }
+    options: { host: '0.0.0.0', port: 5672 }
   })
 
   await app.startAllMicroservices()

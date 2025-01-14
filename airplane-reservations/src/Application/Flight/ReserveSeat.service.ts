@@ -44,6 +44,7 @@ export class ReserveSeatService {
             flight.reservations = reservations
 
             const person = await this.airplanePersonService.findPerson(personId)
+            console.log(person)
 
             if (!person) {
                 throw new BadRequestException(`person with id ${personId} does not exist`)

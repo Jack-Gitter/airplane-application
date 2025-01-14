@@ -5,7 +5,7 @@ import { Initial1736890878198 } from "../Migrations/1736890878198-initial"
 const dataSource = new DataSource({
       type: 'postgres',
       host: 'localhost',
-      port: 5433,
+      port: 5434,
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',

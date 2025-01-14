@@ -8,7 +8,7 @@ import { PersonModule } from './Person.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5433,
+      port: 5434,
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',

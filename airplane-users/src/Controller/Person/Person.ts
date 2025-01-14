@@ -22,7 +22,7 @@ export class PersonController {
 
     @Get(':id')
     public async Person(@Param() findPersonDTO: FindPersonDTO) {
-        await this.findPersonService.findPerson(findPersonDTO.id)
+        return await this.findPersonService.findPerson(findPersonDTO.id)
     }
 
 }

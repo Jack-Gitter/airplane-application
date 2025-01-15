@@ -11,10 +11,10 @@ export class Flight {
     @PrimaryGeneratedColumn('uuid')
     public id: UUID
 
-    @OneToMany(() => Reservation, (reservation) => reservation.flight, { cascade: true, onDelete: 'CASCADE' })
+    @OneToMany(() => Reservation, (reservation) => reservation.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
     public reservations: Array<Reservation>
 
-    @OneToMany(() => Seat, (seat) => seat.flight, { cascade: true, onDelete: 'CASCADE' })
+    @OneToMany(() => Seat, (seat) => seat.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
     public seats: Array<Seat>
 
     constructor(id: UUID, seats: Array<Seat>) {

@@ -44,6 +44,8 @@ export class CancelReservationService {
 
             flight.cancelReservation(seatPosition, personId)
 
+            console.log(flight)
+
             await flightRepository.save(flight)
 
         })

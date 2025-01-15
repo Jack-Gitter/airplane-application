@@ -10,7 +10,7 @@ export class Seat {
     @PrimaryGeneratedColumn('uuid')
     public id: UUID
 
-    @ManyToOne(() => Flight, (flight) => flight.seats)
+    @ManyToOne(() => Flight, (flight) => flight.seats, {orphanedRowAction: 'delete'})
     public flight: UUID
 
     @Column(() => SeatPosition)

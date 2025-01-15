@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { CreatePersonService } from "src/Application/Person/CreatePersonService";
 import { CreatePersonDTO } from "./DTO/CreatePersonDTO";
-import { UUID } from "crypto";
 import { FindPersonDTO } from "./DTO/FindPersonDTO";
 import { FindPersonService } from "src/Application/Person/FindPersonService";
 import { DeletePersonDTO } from "./DTO/DeletePersonDTO";

@@ -5,6 +5,7 @@ import { CreateReservationDTO } from "./Dto/CreateReservationDTO";
 import { CancelReservationDTO } from "./Dto/CancelReservationDTO";
 import { CreateReservationService } from "src/Application/Flight/CreateReservation.service";
 import { CancelReservationService } from "src/Application/Flight/CancelReservation.service";
+import { EventPattern, Payload } from "@nestjs/microservices";
 
 @Controller('flight')
 export class FlightController {
@@ -38,6 +39,13 @@ export class FlightController {
             cancelReservationDTO.seatRow,
             cancelReservationDTO.seatColumn
         )
+    }
+
+    @EventPattern('PersonDeletedAccount')
+    public async cancelReservationViaMessage(data: Record<string, unknown>) {
+        console.log(data)
+        //await this.cancelReservation(cancelReservationDTO)
+        //
     }
 
 }

@@ -1,9 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { UUID } from "crypto";
 import { SeatPosition } from "../../ValueObjects/SeatPosition";
 import { Flight } from "../../Flight";
 
 @Entity('Reservation')
+@Unique('flight_seatPosition', ['flight', 'seatPosition'])
 export class Reservation {
 
     @PrimaryGeneratedColumn('uuid')

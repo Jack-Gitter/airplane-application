@@ -7,11 +7,12 @@ import { CreateFlightService } from "src/Application/Flight/CreateFlight.service
 import { CreateReservationService } from "src/Application/Flight/CreateReservation.service";
 import { FlightController } from "src/Controller/Flight/Flight";
 import { Flight } from "src/Domain/Flight/Flight";
+import { FlightEventHandler } from "src/EventHandler/Flight";
 import { FindPersonService } from "src/Infrastructure/AirplanePerson/FindPerson.service";
 
 @Module({
     imports: [TypeOrmModule.forFeature([Flight]), HttpModule],
-    controllers: [FlightController],
+    controllers: [FlightController, FlightEventHandler],
     providers: [CreateFlightService, CreateReservationService, FindPersonService, CancelReservationService, CancelReservationsByPersonService],
     exports: []
 })

@@ -51,7 +51,7 @@ export class ReserveSeatService {
 
             const seatPosition = new SeatPosition(seatRow, seatCol)
 
-            flight.reserveSeat(seatPosition, personId)
+            flight.makeReservation(seatPosition, personId)
 
             await flightRepository.save(flight)
 

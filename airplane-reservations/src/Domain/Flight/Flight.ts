@@ -22,7 +22,7 @@ export class Flight {
         this.seats = seats
     }
 
-    public reserveSeat(seatPosition: SeatPosition, personId: UUID) {
+    public makeReservation(seatPosition: SeatPosition, personId: UUID) {
 
         if (!this.reservations) {
             this.reservations = new Array<Reservation>()
@@ -43,5 +43,27 @@ export class Flight {
         const reservation = Reservation.CreateReservation(seatPosition, personId, this.id)
 
         this.reservations.push(reservation)
+    }
+
+    public cancelReservation(seatPosition: SeatPosition, personId: UUID) {
+
+        if (!this.reservations) {
+            throw new BadRequestException(`No reservations exist for this flight!`)
+        }
+
+        const seat = this.seats.find((seat) => seat.position.equals(seatPosition))
+
+        if (!seat) {
+            throw new BadRequestException(`No seat found with the position ${seatPosition} on the flight ${this.id}`)
+        }
+
+        const existingReservation = this.reservations.find((reservation) => reservation.seatPosition.equals(seatPosition))
+
+        if (!existingReservation) {
+            throw new BadRequestException(`No existing reservation with that information exists`)
+        }
+
+        this.reservations = this.reservations.filter((reservation) => { reservation.id !== existingReservation.id })
+
     }
 }

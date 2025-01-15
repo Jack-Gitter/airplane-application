@@ -1,8 +1,9 @@
 import { HttpModule, HttpService } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { CancelReservationService } from "src/Application/Flight/CancelReservation.service";
 import { CreateFlightService } from "src/Application/Flight/CreateFlight.service";
-import { ReserveSeatService } from "src/Application/Flight/ReserveSeat.service";
+import { CreateReservationService } from "src/Application/Flight/CreateReservation.service";
 import { FlightController } from "src/Controller/Flight/Flight";
 import { Flight } from "src/Domain/Flight/Flight";
 import { FindPersonService } from "src/Infrastructure/AirplanePerson/FindPerson.service";
@@ -10,7 +11,7 @@ import { FindPersonService } from "src/Infrastructure/AirplanePerson/FindPerson.
 @Module({
     imports: [TypeOrmModule.forFeature([Flight]), HttpModule],
     controllers: [FlightController],
-    providers: [CreateFlightService, ReserveSeatService, FindPersonService],
+    providers: [CreateFlightService, CreateReservationService, FindPersonService, CancelReservationService],
     exports: []
 })
 

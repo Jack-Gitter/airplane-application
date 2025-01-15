@@ -1,13 +1,19 @@
 import { CreateFlightService } from "src/Application/Flight/CreateFlight.service";
-import { ReserveSeatService } from "src/Application/Flight/ReserveSeat.service";
 import { CreateFlightDTO } from "./Dto/CreateFlightDTO";
-import { ReserveSeatDTO } from "./Dto/ReserveSeatDTO";
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Post } from "@nestjs/common";
+import { CreateReservationDTO } from "./Dto/CreateReservationDTO";
+import { CancelReservationDTO } from "./Dto/CancelReservationDTO";
+import { CreateReservationService } from "src/Application/Flight/CreateReservation.service";
+import { CancelReservationService } from "src/Application/Flight/CancelReservation.service";
 
 @Controller('flight')
 export class FlightController {
 
-    constructor(private createFlightService: CreateFlightService, private reserveSeatService: ReserveSeatService) {}
+    constructor(
+        private createFlightService: CreateFlightService, 
+        private createReservationService: CreateReservationService,
+        private cancelReservationService: CancelReservationService
+    ) {}
 
     @Post()
     public async createFlight(@Body() createFlightDTO: CreateFlightDTO) {
@@ -15,12 +21,22 @@ export class FlightController {
     }
     
     @Post('reservation')
-    public async reserveSeat(@Body() reserveSeatDTO: ReserveSeatDTO) {
-        return await this.reserveSeatService.reserveSeat(
+    public async reserveSeat(@Body() reserveSeatDTO: CreateReservationDTO) {
+        return await this.createReservationService.reserveSeat(
             reserveSeatDTO.flightId, 
             reserveSeatDTO.personId, 
             reserveSeatDTO.seatRow, 
             reserveSeatDTO.seatColumn
+        )
+    }
+
+    @Delete('reservation')
+    public async cancelReservation(@Body() cancelReservationDTO: CancelReservationDTO) {
+        return await this.cancelReservationService.cancelReservation(
+            cancelReservationDTO.flightId,
+            cancelReservationDTO.personId,
+            cancelReservationDTO.seatRow,
+            cancelReservationDTO.seatColumn
         )
     }
 

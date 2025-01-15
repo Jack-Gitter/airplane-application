@@ -2,7 +2,7 @@ import { IsEnum, IsNumber, IsUUID } from "class-validator"
 import { UUID } from "crypto"
 import { SEAT_COLUMN } from "src/Domain/Flight/ValueObjects/SeatPosition"
 
-export class ReserveSeatDTO {
+export class CreateReservationDTO {
 
     @IsUUID()
     flightId: UUID

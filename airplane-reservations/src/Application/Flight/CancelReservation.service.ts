@@ -1,21 +1,18 @@
-import { HttpService } from "@nestjs/axios";
-import { BadRequestException, Inject, NotFoundException } from "@nestjs/common";
-import { InjectDataSource } from "@nestjs/typeorm";
-import { UUID } from "crypto";
-import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation";
-import { Flight } from "src/Domain/Flight/Flight";
-import { SEAT_COLUMN, SeatPosition } from "src/Domain/Flight/ValueObjects/SeatPosition";
-import { FindPersonService } from "src/Infrastructure/AirplanePerson/FindPerson.service";
-import { DataSource } from "typeorm";
+import { NotFoundException } from "@nestjs/common"
+import { InjectDataSource } from "@nestjs/typeorm"
+import { UUID } from "crypto"
+import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation"
+import { Flight } from "src/Domain/Flight/Flight"
+import { SEAT_COLUMN, SeatPosition } from "src/Domain/Flight/ValueObjects/SeatPosition"
+import { DataSource } from "typeorm"
 
-export class ReserveSeatService {
+export class CancelReservationService {
 
     public constructor(
         @InjectDataSource() private dataSource: DataSource,
-        private findPersonService: FindPersonService
     ) {}
 
-    public async reserveSeat(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
+    public async cancelReservation(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
 
         await this.dataSource.transaction(async (entityManager) => {
 
@@ -43,15 +40,9 @@ export class ReserveSeatService {
 
             flight.reservations = reservations
 
-            const pId = await this.findPersonService.findPerson(personId)
-
-            if (!pId) {
-                throw new BadRequestException(`person with id ${personId} does not exist`)
-            }
-
             const seatPosition = new SeatPosition(seatRow, seatCol)
 
-            flight.makeReservation(seatPosition, personId)
+            flight.cancelReservation(seatPosition, personId)
 
             await flightRepository.save(flight)
 

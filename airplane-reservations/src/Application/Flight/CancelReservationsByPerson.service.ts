@@ -9,6 +9,7 @@ export class CancelReservationsByPersonService {
     public async cancelReservationByPerson(personId: UUID) {
         const flights = await this.flightRepository
         .createQueryBuilder('flight')
+        .setLock('pessimistic_write')
         .innerJoinAndSelect('flight.reservations', 'reservations')
         .where('reservations."personId" = :personId', { personId }) 
         .getMany()

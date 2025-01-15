@@ -4,7 +4,7 @@ import { Flight } from "../../../Domain/Flight/Flight";
 import { Seat } from "../../../Domain/Flight/Entities/Reservation/Seat";
 import { FlightSchedule } from "../../../Domain/FlightSchedule/FlightSchedule";
 import { Segment } from "../../../Domain/FlightSchedule/Entity/Segment";
-import { Initial1736889387721 } from "../Migrations/1736889387721-initial";
+import { Init1736952733343 } from "../Migrations/1736952733343-init";
 
 const dataSource = new DataSource({
       type: 'postgres',
@@ -14,7 +14,7 @@ const dataSource = new DataSource({
       password: 'postgres',
       database: 'postgres',
       entities: [Flight, Reservation, Seat, FlightSchedule, Segment],
-      migrations: [Initial1736889387721],
+      migrations: [Init1736952733343],
       synchronize: false,
 })
 

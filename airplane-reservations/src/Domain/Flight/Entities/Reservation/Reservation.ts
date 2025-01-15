@@ -4,7 +4,7 @@ import { SeatPosition } from "../../ValueObjects/SeatPosition";
 import { Flight } from "../../Flight";
 
 @Entity('Reservation')
-@Unique('flight_seatPosition', ['flight', 'seatPosition'])
+@Unique('flight_seatPosition', ['flight', 'seatPosition.row', 'seatPosition.column'])
 export class Reservation {
 
     @PrimaryGeneratedColumn('uuid')

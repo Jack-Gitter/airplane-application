@@ -1,23 +1,30 @@
-import { InjectRepository } from "@nestjs/typeorm";
+import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { UUID } from "crypto";
 import { Flight } from "src/Domain/Flight/Flight";
-import { ArrayContains, Repository } from "typeorm";
+import { ArrayContains, DataSource, Repository } from "typeorm";
 
 export class CancelReservationsByPersonService {
-    constructor(@InjectRepository(Flight) private flightRepository: Repository<Flight>) {}
+    constructor(@InjectDataSource() private dataSource: DataSource) {}
 
     public async cancelReservationByPerson(personId: UUID) {
-        const flights = await this.flightRepository
-        .createQueryBuilder('flight')
-        .setLock('pessimistic_write')
-        .innerJoinAndSelect('flight.reservations', 'reservations')
-        .where('reservations."personId" = :personId', { personId }) 
-        .getMany()
 
-        for (const flight of flights) {
-            flight.cancelReservationsByPerson(personId)
-        }
+        await this.dataSource.transaction(async (entityManager) => {
 
-        await this.flightRepository.save(flights)
+            const flightRepository = entityManager.getRepository(Flight)
+
+            const flights = await flightRepository
+            .createQueryBuilder('flight')
+            .setLock('pessimistic_write')
+            .innerJoinAndSelect('flight.reservations', 'reservations')
+            .where('reservations."personId" = :personId', { personId }) 
+            .getMany()
+
+            for (const flight of flights) {
+                flight.cancelReservationsByPerson(personId)
+            }
+
+            await flightRepository.save(flights)
+
+        })
     }
 }

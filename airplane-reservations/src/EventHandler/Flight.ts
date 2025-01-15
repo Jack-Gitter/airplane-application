@@ -12,6 +12,7 @@ export class FlightEventHandler {
 
     @EventPattern('PersonDeletedAccount')
     public async cancelReservationViaMessage(data: UUID) {
+        console.log(data)
         await this.cancelReservationsByPersonService.cancelReservationByPerson(data)
     }
 

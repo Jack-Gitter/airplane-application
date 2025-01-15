@@ -7,6 +7,7 @@ import { CreateReservationService } from "src/Application/Flight/CreateReservati
 import { CancelReservationService } from "src/Application/Flight/CancelReservation.service";
 import { EventPattern, Payload } from "@nestjs/microservices";
 import { UUID } from "crypto";
+import { CancelReservationsByPersonService } from "src/Application/Flight/CancelReservationsByPerson.service";
 
 @Controller('flight')
 export class FlightController {
@@ -14,7 +15,8 @@ export class FlightController {
     constructor(
         private createFlightService: CreateFlightService, 
         private createReservationService: CreateReservationService,
-        private cancelReservationService: CancelReservationService
+        private cancelReservationService: CancelReservationService,
+        private cancelReservationsByPersonService: CancelReservationsByPersonService
     ) {}
 
     @Post()
@@ -43,9 +45,9 @@ export class FlightController {
     }
 
     @EventPattern('PersonDeletedAccount')
-    public async cancelReservationViaMessage(data: Record<string, unknown>) {
+    public async cancelReservationViaMessage(data: UUID) {
         console.log(data)
-        //await this.cancelReservation(cancelReservationDTO)
+        await this.cancelReservationsByPersonService.cancelReservationByPerson(data)
     }
 
 }

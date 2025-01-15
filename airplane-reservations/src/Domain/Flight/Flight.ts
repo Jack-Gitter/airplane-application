@@ -66,4 +66,20 @@ export class Flight {
         this.reservations = this.reservations.filter((reservation) => { reservation.id !== existingReservation.id })
 
     }
+
+    public cancelReservationsByPerson(personId: UUID) {
+
+        if (!this.reservations) {
+            throw new BadRequestException(`No reservations exist for this flight!`)
+        }
+
+        const existingReservations = this.reservations.filter((reservation) => reservation.personId === personId)
+
+        if (existingReservations.length === 0) {
+            throw new BadRequestException(`No existing reservation with that information exists`)
+        }
+
+        this.reservations = this.reservations.filter((reservation) => reservation.personId !== personId)
+
+    }
 }

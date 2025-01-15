@@ -6,7 +6,7 @@ import { HttpCode, Injectable, NotFoundException } from "@nestjs/common";
 import { AxiosError } from "axios";
 
 @Injectable()
-export class AirplanePersonService {
+export class FindPersonService {
 
     constructor(private httpService: HttpService) { }
 

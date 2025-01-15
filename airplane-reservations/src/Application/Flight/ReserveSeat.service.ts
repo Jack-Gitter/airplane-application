@@ -5,14 +5,14 @@ import { UUID } from "crypto";
 import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation";
 import { Flight } from "src/Domain/Flight/Flight";
 import { SEAT_COLUMN, SeatPosition } from "src/Domain/Flight/ValueObjects/SeatPosition";
-import { AirplanePersonService } from "src/Infrastructure/AirplanePerson/AirplanePerson.service";
+import { FindPersonService } from "src/Infrastructure/AirplanePerson/FindPerson.service";
 import { DataSource } from "typeorm";
 
 export class ReserveSeatService {
 
     public constructor(
         @InjectDataSource() private dataSource: DataSource,
-        private airplanePersonService: AirplanePersonService
+        private findPersonService: FindPersonService
     ) {}
 
     public async reserveSeat(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
@@ -43,7 +43,7 @@ export class ReserveSeatService {
 
             flight.reservations = reservations
 
-            const person = await this.airplanePersonService.findPerson(personId)
+            const person = await this.findPersonService.findPerson(personId)
 
             if (!person) {
                 throw new BadRequestException(`person with id ${personId} does not exist`)

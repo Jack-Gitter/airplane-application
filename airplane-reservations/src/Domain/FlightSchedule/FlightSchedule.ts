@@ -19,7 +19,7 @@ export class FlightSchedule {
         this.segments = segments
     }
 
-    public CreateFlightSchedule(): FlightSchedule {
+    public static CreateFlightSchedule(): FlightSchedule {
         return new FlightSchedule(new Array())
     }
 

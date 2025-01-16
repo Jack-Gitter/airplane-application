@@ -9,6 +9,7 @@ import { Repository } from "typeorm";
 export class CheckScheduleService {
     constructor(
         @InjectRepository(FlightSchedule) private flightScheduleRepository: Repository<FlightSchedule>,
+        private eventEmitter: EventEmitter2
     ) {}
 
     public async checkScheduleExists(id: UUID) {
@@ -17,7 +18,9 @@ export class CheckScheduleService {
             where: {id}
         })
 
-        return schedule
+        if (!schedule) {
+            this.eventEmitter.emit('RemoveScheduleFromFlight', id)
+        }
 
     }
 }

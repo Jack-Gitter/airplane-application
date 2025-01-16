@@ -1,13 +1,17 @@
-import { NotFoundException } from "@nestjs/common";
+import { Inject, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UUID } from "crypto";
 import { DoesPersonExistDTO } from "src/EventHandler/DTO/DoesPersonExistDTO";
 import { Person } from "src/Domain/Person/Person";
 import { Repository } from "typeorm";
+import { ClientProxy } from "@nestjs/microservices";
 
 export class FindPersonService {
 
-    constructor(@InjectRepository(Person) private personRepository: Repository<Person>) {}
+    constructor(
+        @InjectRepository(Person) private personRepository: Repository<Person>,
+        @Inject('RMQ_CLIENT') private rmqClient: ClientProxy,
+    ) {}
 
     public async findPerson(personId: UUID) {
 
@@ -22,16 +26,14 @@ export class FindPersonService {
         return true
     }
 
-    public async doesPersonExist(personId: UUID): Promise<boolean> {
+    public async doesPersonExist(personId: UUID) {
 
         const person = await this.personRepository.findOne({
             where: {id: personId}
         })
 
         if (!person) {
-            false
+            this.rmqClient.emit('PersonDoesNotExist', personId)
         }
-
-        return true
     }
 }

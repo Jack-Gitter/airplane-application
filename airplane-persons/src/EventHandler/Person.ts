@@ -7,14 +7,10 @@ import { FindPersonService } from "src/Application/Person/FindPersonService";
 export class PersonEventHandler {
     constructor(
         private findPersonService: FindPersonService,
-        @Inject('RMQ_CLIENT') private rmqClient: ClientProxy
     ) {}
 
     @EventPattern('PersonExistsCheck')
     public async doesPersonExist(data: UUID) {
-        const response = await this.findPersonService.doesPersonExist(data)
-        if (!response) {
-            this.rmqClient.emit('PersonDoesNotExist', data)
-        }
+        return await this.findPersonService.doesPersonExist(data)
     }
 }

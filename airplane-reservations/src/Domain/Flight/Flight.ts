@@ -4,12 +4,16 @@ import { Reservation } from "./Entities/Reservation/Reservation";
 import { Seat } from "./Entities/Reservation/Seat";
 import { SeatPosition } from "./ValueObjects/SeatPosition";
 import { BadRequestException } from "@nestjs/common";
+import { FLIGHT_STATUS } from "./FlightEnums";
 
 @Entity('Flight')
 export class Flight {
 
     @PrimaryGeneratedColumn('uuid')
     public id: UUID
+
+    @Column({type: 'enum', enum: FLIGHT_STATUS, default: FLIGHT_STATUS.ON_TIME})
+    public status: FLIGHT_STATUS
 
     @OneToMany(() => Reservation, (reservation) => reservation.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
     public reservations: Array<Reservation>
@@ -20,6 +24,7 @@ export class Flight {
     constructor(id: UUID, seats: Array<Seat>) {
         this.id = id
         this.seats = seats
+        this.status = FLIGHT_STATUS.ON_TIME
     }
 
     public makeReservation(seatPosition: SeatPosition, personId: UUID) {

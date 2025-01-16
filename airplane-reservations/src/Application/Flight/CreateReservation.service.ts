@@ -1,5 +1,5 @@
 import { HttpService } from "@nestjs/axios";
-import { BadRequestException, Inject, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { InjectDataSource } from "@nestjs/typeorm";
 import { UUID } from "crypto";
@@ -8,6 +8,7 @@ import { Flight } from "src/Domain/Flight/Flight";
 import { SEAT_COLUMN, SeatPosition } from "src/Domain/Flight/ValueObjects/SeatPosition";
 import { DataSource } from "typeorm";
 
+@Injectable()
 export class CreateReservationService {
 
     public constructor(

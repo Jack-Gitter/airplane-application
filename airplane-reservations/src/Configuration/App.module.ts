@@ -9,6 +9,7 @@ import { FlightModule } from './flight.module';
 import { FlightController } from 'src/Controller/Flight/Flight';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { FlightScheduleModule } from './FlightSchedule.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     }),
     EventEmitterModule.forRoot(),
     FlightModule,
+    FlightScheduleModule
   ],
   controllers: [],
   providers: [],

@@ -1,8 +1,10 @@
+import { Injectable } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { UUID } from "crypto";
 import { Flight } from "src/Domain/Flight/Flight";
 import { ArrayContains, DataSource, Repository } from "typeorm";
 
+@Injectable()
 export class CancelReservationsByPersonService {
     constructor(@InjectDataSource() private dataSource: DataSource) {}
 

@@ -1,3 +1,5 @@
+testing: 
+    ensure flight schedules created properly
 todo: 
 
     look at anti-corruption layer and see if I'm doing it right

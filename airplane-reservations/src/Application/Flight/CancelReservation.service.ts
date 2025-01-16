@@ -1,4 +1,4 @@
-import { NotFoundException } from "@nestjs/common"
+import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectDataSource } from "@nestjs/typeorm"
 import { UUID } from "crypto"
 import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation"
@@ -6,6 +6,7 @@ import { Flight } from "src/Domain/Flight/Flight"
 import { SEAT_COLUMN, SeatPosition } from "src/Domain/Flight/ValueObjects/SeatPosition"
 import { DataSource } from "typeorm"
 
+@Injectable()
 export class CancelReservationService {
 
     public constructor(

@@ -6,7 +6,7 @@ import { CheckScheduleService } from "src/Application/FlightSchedule/CheckSchedu
 import { FlightSchedule } from "src/Domain/FlightSchedule/FlightSchedule";
 import { Repository } from "typeorm";
 
-@Controller()
+@Controller('flightScheduleEventHandler')
 export class FlightScheduleEventHandler {
 
     constructor(

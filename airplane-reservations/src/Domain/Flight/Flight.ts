@@ -17,6 +17,7 @@ export class Flight {
     public status: FLIGHT_STATUS
 
     @OneToOne(() => FlightSchedule, (flightSchedule) => flightSchedule.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
+    @JoinColumn()
     public schedule: UUID
 
     @OneToMany(() => Reservation, (reservation) => reservation.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })

@@ -3,6 +3,7 @@ todo:
     look at anti-corruption layer and see if I'm doing it right
 
     implement the rest of the functionality
+        implement adding a schedule to a flight
         implement adding segments to a flight
         implement removing segments from a flight
         implement delaying a flight

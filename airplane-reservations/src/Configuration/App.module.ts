@@ -22,7 +22,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
       entities: [Flight, Reservation, Seat, FlightSchedule, Segment],
       synchronize: false,
     }),
-    EventEmitterModule.forRoot()
+    EventEmitterModule.forRoot(),
     FlightModule,
   ],
   controllers: [],

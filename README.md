@@ -1,14 +1,10 @@
 testing: 
-    ensure flight schedules created properly
-    ensure that adding a flight schedule works
-    ensure that if we add a flight schedule, then sleep, then delete, it removes the schedule properly
     ensure that if a flight schedule is deleted, the flight is updated accordingly
 todo: 
 
     look at anti-corruption layer and see if I'm doing it right
 
     implement the rest of the functionality
-        implement adding a schedule to a flight
         implement removing a scheudle from a flight 
             eventual consistency domain event (not rabbitmq)
         implement adding segments to a flight

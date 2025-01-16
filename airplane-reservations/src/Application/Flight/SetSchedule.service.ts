@@ -1,9 +1,11 @@
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { UUID } from "crypto";
 import { Flight } from "src/Domain/Flight/Flight";
 import { DataSource } from "typeorm";
 
+@Injectable()
 export class SetScheduleService {
     constructor(
         @InjectDataSource() private dataSource: DataSource,
@@ -19,6 +21,10 @@ export class SetScheduleService {
             .where('flight.id = :flightId', {flightId})
             .setLock('pessimistic_write')
             .getOne()
+
+            if (!flight) {
+                throw new BadRequestException(`Flight with id ${flightId} does not exist`)
+            }
 
             flight.setSchedule(scheduleId)
 

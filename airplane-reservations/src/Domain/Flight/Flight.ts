@@ -16,7 +16,7 @@ export class Flight {
     @Column({type: 'enum', enum: FLIGHT_STATUS, default: FLIGHT_STATUS.ON_TIME})
     public status: FLIGHT_STATUS
 
-    @OneToOne(() => FlightSchedule, (flightSchedule) => flightSchedule.flight, { cascade: true, onDelete: 'NO ACTION' })
+    @OneToOne(() => FlightSchedule, (flightSchedule) => flightSchedule.flight, { cascade: true, onDelete: 'NO ACTION', nullable: true, createForeignKeyConstraints: false })
     @JoinColumn()
     public schedule: UUID
 

@@ -2,7 +2,8 @@ import { IsEnum, IsNumber, IsUUID } from "class-validator"
 import { UUID } from "crypto"
 import { SEAT_COLUMN } from "src/Domain/Flight/ValueObjects/SeatPosition"
 
-export class AdjustReservationDTO {
+export class SwitchReservationDTO {
+
     @IsUUID()
     flightId: UUID
 
@@ -10,8 +11,14 @@ export class AdjustReservationDTO {
     personId: UUID
 
     @IsNumber()
-    seatRow: number
+    currentSeatRow: number
 
     @IsEnum(SEAT_COLUMN)
-    seatColumn: SEAT_COLUMN
+    currentSeatColumn: SEAT_COLUMN
+
+    @IsNumber()
+    desiredSeatRow: number
+
+    @IsEnum(SEAT_COLUMN)
+    desiredSeatColumn: SEAT_COLUMN
 }

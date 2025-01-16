@@ -1,6 +1,6 @@
 import { CreateFlightService } from "src/Application/Flight/CreateFlight.service";
 import { CreateFlightDTO } from "./Dto/CreateFlightDTO";
-import { Body, Controller, Delete, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Patch, Post } from "@nestjs/common";
 import { CreateReservationDTO } from "./Dto/CreateReservationDTO";
 import { CancelReservationDTO } from "./Dto/CancelReservationDTO";
 import { CreateReservationService } from "src/Application/Flight/CreateReservation.service";
@@ -8,6 +8,8 @@ import { CancelReservationService } from "src/Application/Flight/CancelReservati
 import { EventPattern, Payload } from "@nestjs/microservices";
 import { UUID } from "crypto";
 import { CancelReservationsByPersonService } from "src/Application/Flight/CancelReservationsByPerson.service";
+import { SwitchReservationDTO } from "./Dto/SwitchReservationDTO";
+import { SwitchReservationService } from "src/Application/Flight/SwitchReservation.service";
 
 @Controller('flight')
 export class FlightController {
@@ -16,7 +18,7 @@ export class FlightController {
         private createFlightService: CreateFlightService, 
         private createReservationService: CreateReservationService,
         private cancelReservationService: CancelReservationService,
-        private cancelReservationsByPersonService: CancelReservationsByPersonService
+        private switchReservationService: SwitchReservationService,
     ) {}
 
     @Post()
@@ -42,6 +44,19 @@ export class FlightController {
             cancelReservationDTO.seatRow,
             cancelReservationDTO.seatColumn
         )
+    }
+
+    @Patch('reservation')
+    public async switchReservation(@Body() switchReservationDTO: SwitchReservationDTO) {
+        return await this.switchReservationService.switchReservation(
+            switchReservationDTO.flightId,
+            switchReservationDTO.personId,
+            switchReservationDTO.currentSeatRow,
+            switchReservationDTO.currentSeatColumn,
+            switchReservationDTO.desiredSeatRow,
+            switchReservationDTO.desiredSeatColumn,
+        )
+
     }
 
 }

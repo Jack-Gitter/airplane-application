@@ -49,7 +49,6 @@ export class CreateReservationService {
 
             await flightRepository.save(flight)
 
-            console.log('sending message to airplane-persons')
             this.rmqClient.emit('PersonExistsCheck', personId)
 
         })

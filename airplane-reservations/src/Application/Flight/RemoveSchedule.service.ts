@@ -31,11 +31,16 @@ export class RemoveScheduleService {
             const flightRepository = entityManager.getRepository(Flight)
 
             const flight = await flightRepository.findOne({
+                relations: ['schedule'],
                 where: {id: flightId}
             })
 
             if (!flight) {
                 throw new NotFoundException(`flight with id ${flightId} not found`)
+            }
+
+            if (!flight.schedule) {
+                throw new NotFoundException(`Flight has no schedule`)
             }
 
             flight.setSchedule(null)

@@ -66,6 +66,7 @@ export class FlightController {
         return await this.setScheduleService.setSchedule(setScheduleDTO.flightId, setScheduleDTO.scheduleId)
     }
 
+    @Delete('schedule')
     public async removeSchedule(@Body() removeScheduleDTO: removeScheduleDTO) {
         return await this.removeScheduleService.removeScheduleByFlight(removeScheduleDTO.flightId)
     }

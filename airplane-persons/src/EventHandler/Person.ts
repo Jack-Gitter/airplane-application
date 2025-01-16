@@ -12,7 +12,6 @@ export class PersonEventHandler {
 
     @EventPattern('PersonExistsCheck')
     public async doesPersonExist(data: UUID) {
-        console.log('in the person exists check in airplane-person')
         const response = await this.findPersonService.doesPersonExist(data)
         this.rmqClient.emit('PersonExistsReponse', response)
     }

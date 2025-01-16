@@ -32,6 +32,6 @@ export class FindPersonService {
             return {found: false, personId} satisfies DoesPersonExistDTO
         }
 
-        return {found: false, personId} satisfies DoesPersonExistDTO
+        return {found: true, personId} satisfies DoesPersonExistDTO
     }
 }

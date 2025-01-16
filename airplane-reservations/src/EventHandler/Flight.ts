@@ -18,10 +18,7 @@ export class FlightEventHandler {
 
     @EventPattern('PersonExistsReponse')
     public async validateReservationViaMessage(data: PersonExistsResponseDTO) {
-        console.log('in the person exists response handler in airplane-reservation')
-        console.log(data)
         if (!data.found) {
-            console.log('cancelling reservation')
             await this.cancelReservationViaMessage(data.personId)
         }
     }

@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common"
 import { EventPattern, MessagePattern } from "@nestjs/microservices"
 import { UUID } from "crypto"
 import { CancelReservationsByPersonService } from "src/Application/Flight/CancelReservationsByPerson.service"
-import { DoesPersonExistDTO } from "./Dto/DoesPersonExistDTO"
+import {  PersonExistsResponseDTO } from "./Dto/PersonExistsResponseDTO"
 
 @Controller('flightEventHandler')
 export class FlightEventHandler {
@@ -16,11 +16,13 @@ export class FlightEventHandler {
         await this.cancelReservationsByPersonService.cancelReservationByPerson(data)
     }
 
-    @MessagePattern('PersonExistsCheck')
-    public async validateReservationViaMessage(data: DoesPersonExistDTO) {
+    @EventPattern('PersonExistsReponse')
+    public async validateReservationViaMessage(data: PersonExistsResponseDTO) {
+        console.log('in the person exists response handler in airplane-reservation')
         console.log(data)
-        if (!data.getFound()) {
-            await this.cancelReservationViaMessage(data.getPersonId())
+        if (!data.found) {
+            console.log('cancelling reservation')
+            await this.cancelReservationViaMessage(data.personId)
         }
     }
 

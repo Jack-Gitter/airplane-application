@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
-import { EventPattern, MessagePattern } from "@nestjs/microservices";
+import { Body, Controller, Delete, Get, Inject, Param, Post } from "@nestjs/common";
+import { ClientProxy, EventPattern, MessagePattern } from "@nestjs/microservices";
 import { UUID } from "crypto";
 import { FindPersonService } from "src/Application/Person/FindPersonService";
 
@@ -7,12 +7,13 @@ import { FindPersonService } from "src/Application/Person/FindPersonService";
 export class PersonEventHandler {
     constructor(
         private findPersonService: FindPersonService,
+        @Inject('RMQ_CLIENT') private rmqClient: ClientProxy
     ) {}
 
-    @MessagePattern('PersonExistsCheck')
+    @EventPattern('PersonExistsCheck')
     public async doesPersonExist(data: UUID) {
-        console.log('here!')
-        console.log(data)
-        return await this.findPersonService.doesPersonExist(data)
+        console.log('in the person exists check in airplane-person')
+        const response = await this.findPersonService.doesPersonExist(data)
+        this.rmqClient.emit('PersonExistsReponse', response)
     }
 }

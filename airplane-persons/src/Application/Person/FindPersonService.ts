@@ -29,9 +29,9 @@ export class FindPersonService {
         })
 
         if (!person) {
-            return new DoesPersonExistDTO(false, personId)
+            return {found: false, personId} satisfies DoesPersonExistDTO
         }
 
-        return new DoesPersonExistDTO(true, personId)
+        return {found: false, personId} satisfies DoesPersonExistDTO
     }
 }

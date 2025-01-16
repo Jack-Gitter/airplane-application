@@ -60,7 +60,7 @@ export class FlightController {
 
     @Post('schedule')
     public async setSchedule(@Body() setScheduleDTO: SetScheduleDTO) {
-        this.setScheduleService.setSchedule(setScheduleDTO.flightId, setScheduleDTO.scheduleId)
+        return await this.setScheduleService.setSchedule(setScheduleDTO.flightId, setScheduleDTO.scheduleId)
     }
 
 }

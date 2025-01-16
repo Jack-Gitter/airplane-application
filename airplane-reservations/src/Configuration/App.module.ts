@@ -8,6 +8,7 @@ import { FlightSchedule } from 'src/Domain/FlightSchedule/FlightSchedule';
 import { FlightModule } from './flight.module';
 import { FlightController } from 'src/Controller/Flight/Flight';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       entities: [Flight, Reservation, Seat, FlightSchedule, Segment],
       synchronize: false,
     }),
+    EventEmitterModule.forRoot()
     FlightModule,
   ],
   controllers: [],

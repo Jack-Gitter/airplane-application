@@ -9,7 +9,7 @@ import { CreateReservationService } from "src/Application/Flight/CreateReservati
 import { SwitchReservationService } from "src/Application/Flight/SwitchReservation.service";
 import { FlightController } from "src/Controller/Flight/Flight";
 import { Flight } from "src/Domain/Flight/Flight";
-import { FlightEventHandler } from "src/EventHandler/Flight";
+import { FlightEventHandler } from "src/EventHandler/Flight/Flight";
 
 @Module({
     imports: [

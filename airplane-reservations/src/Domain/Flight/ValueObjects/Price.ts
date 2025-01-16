@@ -29,7 +29,7 @@ export class Price {
         return this.subUnits
     }
 
-    public equals(other: Price) {
-        this.currency === other.currency && this.units === other.units && this.subUnits === other.subUnits
+    public equals(other: Price): boolean {
+        return this.currency === other.currency && this.units === other.units && this.subUnits === other.subUnits
     }
 }

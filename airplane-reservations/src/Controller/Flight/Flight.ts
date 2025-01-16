@@ -5,11 +5,10 @@ import { CreateReservationDTO } from "./Dto/CreateReservationDTO";
 import { CancelReservationDTO } from "./Dto/CancelReservationDTO";
 import { CreateReservationService } from "src/Application/Flight/CreateReservation.service";
 import { CancelReservationService } from "src/Application/Flight/CancelReservation.service";
-import { EventPattern, Payload } from "@nestjs/microservices";
-import { UUID } from "crypto";
-import { CancelReservationsByPersonService } from "src/Application/Flight/CancelReservationsByPerson.service";
 import { SwitchReservationDTO } from "./Dto/SwitchReservationDTO";
 import { SwitchReservationService } from "src/Application/Flight/SwitchReservation.service";
+import { SetScheduleDTO } from "./Dto/SetScheduleDTO";
+import { SetScheduleService } from "src/Application/Flight/SetSchedule.service";
 
 @Controller('flight')
 export class FlightController {
@@ -19,6 +18,7 @@ export class FlightController {
         private createReservationService: CreateReservationService,
         private cancelReservationService: CancelReservationService,
         private switchReservationService: SwitchReservationService,
+        private setScheduleService: SetScheduleService
     ) {}
 
     @Post()
@@ -56,7 +56,11 @@ export class FlightController {
             switchReservationDTO.desiredSeatRow,
             switchReservationDTO.desiredSeatColumn,
         )
+    }
 
+    @Post('schedule')
+    public async setSchedule(@Body() setScheduleDTO: SetScheduleDTO) {
+        this.setScheduleService.setSchedule(setScheduleDTO.flightId, setScheduleDTO.scheduleId)
     }
 
 }

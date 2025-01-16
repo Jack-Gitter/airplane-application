@@ -16,7 +16,7 @@ export class Flight {
     @Column({type: 'enum', enum: FLIGHT_STATUS, default: FLIGHT_STATUS.ON_TIME})
     public status: FLIGHT_STATUS
 
-    @OneToOne(() => FlightSchedule, (flightSchedule) => flightSchedule.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
+    @OneToOne(() => FlightSchedule, (flightSchedule) => flightSchedule.flight, { cascade: true, onDelete: 'NO ACTION' })
     @JoinColumn()
     public schedule: UUID
 
@@ -129,5 +129,9 @@ export class Flight {
 
         this.reservations.push(newReservation)
 
+    }
+
+    public setSchedule(schedule: UUID) {
+        this.schedule = schedule
     }
 }

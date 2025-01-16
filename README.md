@@ -4,6 +4,8 @@ todo:
 
     implement the rest of the functionality
         implement adding a schedule to a flight
+        implement removing a scheudle from a flight 
+            eventual consistency domain event (not rabbitmq)
         implement adding segments to a flight
         implement removing segments from a flight
         implement delaying a flight

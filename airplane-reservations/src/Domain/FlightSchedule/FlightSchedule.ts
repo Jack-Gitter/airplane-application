@@ -9,7 +9,7 @@ export class FlightSchedule {
     @PrimaryGeneratedColumn('uuid')
     public id: UUID
 
-    @OneToOne(() => Flight, (flight) => flight.schedule, { orphanedRowAction: 'delete' } )
+    @OneToOne(() => Flight, (flight) => flight.schedule)
     public flight: UUID
 
     @OneToMany(() => Segment, (segment) => segment.scheduleId, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })

@@ -134,4 +134,8 @@ export class Flight {
     public setSchedule(schedule: UUID) {
         this.schedule = schedule
     }
+
+    public removeSchedule() {
+        this.schedule = null
+    }
 }

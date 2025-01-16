@@ -9,6 +9,8 @@ import { SwitchReservationDTO } from "./Dto/SwitchReservationDTO";
 import { SwitchReservationService } from "src/Application/Flight/SwitchReservation.service";
 import { SetScheduleDTO } from "./Dto/SetScheduleDTO";
 import { SetScheduleService } from "src/Application/Flight/SetSchedule.service";
+import { RemoveScheduleService } from "src/Application/Flight/RemoveSchedule.service";
+import { removeScheduleDTO } from "./Dto/RemoveScheduleDTO";
 
 @Controller('flight')
 export class FlightController {
@@ -18,7 +20,8 @@ export class FlightController {
         private createReservationService: CreateReservationService,
         private cancelReservationService: CancelReservationService,
         private switchReservationService: SwitchReservationService,
-        private setScheduleService: SetScheduleService
+        private setScheduleService: SetScheduleService,
+        private removeScheduleService: RemoveScheduleService
     ) {}
 
     @Post()
@@ -61,6 +64,10 @@ export class FlightController {
     @Post('schedule')
     public async setSchedule(@Body() setScheduleDTO: SetScheduleDTO) {
         return await this.setScheduleService.setSchedule(setScheduleDTO.flightId, setScheduleDTO.scheduleId)
+    }
+
+    public async removeSchedule(@Body() removeScheduleDTO: removeScheduleDTO) {
+        return await this.removeScheduleService.removeScheduleByFlight(removeScheduleDTO.flightId)
     }
 
 }

@@ -25,7 +25,7 @@ export class FlightEventHandler {
 
     @OnEvent('RemoveScheduleFromFlight', { async: true })
     public async removeScheduleFromFlightViaMessage(scheduleId: UUID) {
-        await this.removeScheduleService.removeScheduleService(scheduleId)
+        await this.removeScheduleService.removeSchedule(scheduleId)
     }
 
 

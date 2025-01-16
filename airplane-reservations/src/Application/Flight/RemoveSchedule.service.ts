@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectDataSource } from "@nestjs/typeorm";
 import { randomUUID, UUID } from "crypto";
 import { Flight } from "src/Domain/Flight/Flight";
@@ -8,7 +8,7 @@ import { DataSource } from "typeorm";
 export class RemoveScheduleService {
     constructor(@InjectDataSource() private dataSource: DataSource) { }
 
-    public async removeScheduleService(scheduleId: UUID) {
+    public async removeSchedule(scheduleId: UUID) {
 
         await this.dataSource.transaction(async (entityManager) => {
             const flightRepository = entityManager.getRepository(Flight)
@@ -23,6 +23,25 @@ export class RemoveScheduleService {
             }
         })
 
+    }
+
+    public async removeScheduleByFlight(flightId: UUID) {
+
+        await this.dataSource.transaction(async (entityManager) => {
+            const flightRepository = entityManager.getRepository(Flight)
+
+            const flight = await flightRepository.findOne({
+                where: {id: flightId}
+            })
+
+            if (!flight) {
+                throw new NotFoundException(`flight with id ${flightId} not found`)
+            }
+
+            flight.setSchedule(null)
+            await flightRepository.save(flight)
+
+        })
     }
 
 

@@ -83,7 +83,11 @@ export class Flight {
 
     }
 
-    public switchReservation(personId: UUID, currentSeatPosition: SeatPosition, desiredSeatPosition: SeatPosition) {
+    public switchReservation(currentSeatPosition: SeatPosition, desiredSeatPosition: SeatPosition, personId: UUID) {
+
+        if (!this.reservations) {
+            throw new BadRequestException(`No reservations exist yet for this flight`)
+        }
 
         const currentSeat = this.seats.find((seat) => seat.position.equals(currentSeatPosition))
 
@@ -97,11 +101,7 @@ export class Flight {
             throw new BadRequestException(`Disired seat does not exist`)
         }
 
-        if (!currentSeat.price.equals(desiredSeat.price)) {
-            throw new BadRequestException(`Cannot switch to a seat with a different price`)
-        }
-
-        const reservationForCurrentSeat = this.reservations.find((reservation) => reservation.personId === personId && reservation.seatPosition.equals(desiredSeatPosition))
+        const reservationForCurrentSeat = this.reservations.find((reservation) => reservation.personId === personId && reservation.seatPosition.equals(currentSeatPosition))
 
         if (!reservationForCurrentSeat) {
             throw new BadRequestException(`The specific person does not have a reservation for the specific current seat`)

@@ -127,4 +127,67 @@ describe(Flight.name, () => {
 
     })
 
+    test('Swapping a reservation works as expected', () => {
+
+        const personId = randomUUID()
+
+        const seatRow1 = 1
+        const seatCol1 = SEAT_COLUMN.A
+        const seatPosition1 = new SeatPosition(seatRow1, seatCol1)
+
+        const seatRow2 = 1
+        const seatCol2 = SEAT_COLUMN.B
+        const seatPosition2 = new SeatPosition(seatRow2, seatCol2)
+
+        flight.makeReservation(seatPosition1, personId)
+
+        expect(flight.reservations).toHaveLength(1)
+        expect(flight.reservations[0].seatPosition.equals(seatPosition1))
+
+        flight.switchReservation(seatPosition1, seatPosition2, personId)
+
+        expect(flight.reservations).toHaveLength(1)
+        expect(flight.reservations[0].seatPosition.equals(seatPosition2))
+
+    })
+
+
+    test('Cannot swap seats if person does not have a reservation for the current seat', () => {
+        const personId = randomUUID()
+
+        const seatRow1 = 1
+        const seatCol1 = SEAT_COLUMN.A
+        const seatPosition1 = new SeatPosition(seatRow1, seatCol1)
+
+        const seatRow2 = 1
+        const seatCol2 = SEAT_COLUMN.B
+        const seatPosition2 = new SeatPosition(seatRow2, seatCol2)
+
+        flight.makeReservation(seatPosition2, personId)
+
+        expect(() => flight.switchReservation(seatPosition1, seatPosition2, personId)).toThrow(BadRequestException)
+
+    })
+
+    test('Cannot swap seats if someone else has a reservation for the desired seat', () => {
+        const personId = randomUUID()
+
+        const seatRow1 = 1
+        const seatCol1 = SEAT_COLUMN.A
+        const seatPosition1 = new SeatPosition(seatRow1, seatCol1)
+
+        const personId2 = randomUUID()
+        const seatRow2 = 1
+        const seatCol2 = SEAT_COLUMN.B
+        const seatPosition2 = new SeatPosition(seatRow2, seatCol2)
+
+        flight.makeReservation(seatPosition1, personId)
+
+        flight.makeReservation(seatPosition2, personId2)
+
+        expect(() => flight.switchReservation(seatPosition1, seatPosition2, personId)).toThrow(BadRequestException)
+
+    })
+
+
 })

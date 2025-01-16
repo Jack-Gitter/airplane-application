@@ -13,6 +13,8 @@ export class PersonEventHandler {
     @EventPattern('PersonExistsCheck')
     public async doesPersonExist(data: UUID) {
         const response = await this.findPersonService.doesPersonExist(data)
-        this.rmqClient.emit('PersonExistsReponse', response)
+        if (!response) {
+            this.rmqClient.emit('PersonDoesNotExist', data)
+        }
     }
 }

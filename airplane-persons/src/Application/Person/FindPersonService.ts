@@ -22,16 +22,16 @@ export class FindPersonService {
         return true
     }
 
-    public async doesPersonExist(personId: UUID): Promise<DoesPersonExistDTO> {
+    public async doesPersonExist(personId: UUID): Promise<boolean> {
 
         const person = await this.personRepository.findOne({
             where: {id: personId}
         })
 
         if (!person) {
-            return {found: false, personId} satisfies DoesPersonExistDTO
+            false
         }
 
-        return {found: true, personId} satisfies DoesPersonExistDTO
+        return true
     }
 }

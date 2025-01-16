@@ -15,4 +15,4 @@ import { FlightScheduleEventHandler } from "src/EventHandler/FlightSchedule/Flig
     exports: []
 })
 
-export class FlightModule {}
+export class FlightScheduleModule {}

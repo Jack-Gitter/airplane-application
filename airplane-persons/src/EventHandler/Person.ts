@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
-import { EventPattern } from "@nestjs/microservices";
+import { EventPattern, MessagePattern } from "@nestjs/microservices";
 import { UUID } from "crypto";
 import { FindPersonService } from "src/Application/Person/FindPersonService";
 
@@ -9,7 +9,7 @@ export class PersonEventHandler {
         private findPersonService: FindPersonService,
     ) {}
 
-    @EventPattern('PersonExistsCheck')
+    @MessagePattern('PersonExistsCheck')
     public async doesPersonExist(data: UUID) {
         console.log('here!')
         console.log(data)

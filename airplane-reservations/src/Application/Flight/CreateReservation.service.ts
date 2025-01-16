@@ -15,7 +15,7 @@ export class CreateReservationService {
         @Inject('RMQ_CLIENT') private rmqClient: ClientProxy
     ) {}
 
-    public async reserveSeat(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
+    public async createReservation(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
 
         await this.dataSource.transaction(async (entityManager) => {
 
@@ -49,6 +49,7 @@ export class CreateReservationService {
 
             await flightRepository.save(flight)
 
+            console.log('sending message!')
             this.rmqClient.send('PersonExistsCheck', personId)
 
         })

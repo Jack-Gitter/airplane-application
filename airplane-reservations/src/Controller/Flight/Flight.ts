@@ -25,8 +25,8 @@ export class FlightController {
     }
     
     @Post('reservation')
-    public async reserveSeat(@Body() reserveSeatDTO: CreateReservationDTO) {
-        return await this.createReservationService.reserveSeat(
+    public async createReservation(@Body() reserveSeatDTO: CreateReservationDTO) {
+        return await this.createReservationService.createReservation(
             reserveSeatDTO.flightId, 
             reserveSeatDTO.personId, 
             reserveSeatDTO.seatRow, 

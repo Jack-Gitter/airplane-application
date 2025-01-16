@@ -1,10 +1,8 @@
 import { NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UUID } from "crypto";
-import { first, last } from "rxjs";
+import { DoesPersonExistDTO } from "src/Controller/Person/DTO/DoesPersonExistDTO";
 import { Person } from "src/Domain/Person/Person";
-import { Email } from "src/Domain/Person/ValueObjects/Email";
-import { Name } from "src/Domain/Person/ValueObjects/Name";
 import { Repository } from "typeorm";
 
 export class FindPersonService {
@@ -18,12 +16,22 @@ export class FindPersonService {
         })
 
         if (!person) {
-            throw new NotFoundException(`person with id ${personId} not found`)
+            throw new NotFoundException(`Person with id ${personId} does not exist`)
         }
 
-        return person
+        return true
     }
 
+    public async doesPersonExist(personId: UUID): Promise<DoesPersonExistDTO> {
 
+        const person = await this.personRepository.findOne({
+            where: {id: personId}
+        })
 
+        if (!person) {
+            return new DoesPersonExistDTO(false, personId)
+        }
+
+        return new DoesPersonExistDTO(true, personId)
+    }
 }

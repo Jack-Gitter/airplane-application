@@ -26,12 +26,12 @@ export class PersonController {
     }
 
     @Get(':id')
-    public async CreatePerson(@Param() findPersonDTO: FindPersonDTO) {
+    public async findPerson(@Param() findPersonDTO: FindPersonDTO) {
         return await this.findPersonService.findPerson(findPersonDTO.id)
     }
 
     @Delete(':id')
-    public async DeletePerson(@Param() deletePersonDTO: DeletePersonDTO) {
+    public async deletePerson(@Param() deletePersonDTO: DeletePersonDTO) {
         return await this.deletePersonService.deletePerson(deletePersonDTO.id)
     }
 

@@ -1,18 +1,18 @@
 import { HttpService } from "@nestjs/axios";
 import { BadRequestException, Inject, NotFoundException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { InjectDataSource } from "@nestjs/typeorm";
 import { UUID } from "crypto";
 import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation";
 import { Flight } from "src/Domain/Flight/Flight";
 import { SEAT_COLUMN, SeatPosition } from "src/Domain/Flight/ValueObjects/SeatPosition";
-import { FindPersonService } from "src/Infrastructure/AirplanePerson/FindPerson.service";
 import { DataSource } from "typeorm";
 
 export class CreateReservationService {
 
     public constructor(
         @InjectDataSource() private dataSource: DataSource,
-        private findPersonService: FindPersonService
+        @Inject('RMQ_CLIENT') private rmqClient: ClientProxy
     ) {}
 
     public async reserveSeat(flightId: UUID, personId: UUID, seatRow: number, seatCol: SEAT_COLUMN) {
@@ -43,17 +43,13 @@ export class CreateReservationService {
 
             flight.reservations = reservations
 
-            const pId = await this.findPersonService.findPerson(personId)
-
-            if (!pId) {
-                throw new BadRequestException(`person with id ${personId} does not exist`)
-            }
-
             const seatPosition = new SeatPosition(seatRow, seatCol)
 
             flight.makeReservation(seatPosition, personId)
 
             await flightRepository.save(flight)
+
+            this.rmqClient.send('PersonExistsCheck', personId)
 
         })
 

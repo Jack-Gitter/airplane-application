@@ -1,5 +1,6 @@
 import { HttpModule, HttpService } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
+import { ClientsModule, Transport } from "@nestjs/microservices";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { CancelReservationService } from "src/Application/Flight/CancelReservation.service";
 import { CancelReservationsByPersonService } from "src/Application/Flight/CancelReservationsByPerson.service";
@@ -8,12 +9,14 @@ import { CreateReservationService } from "src/Application/Flight/CreateReservati
 import { FlightController } from "src/Controller/Flight/Flight";
 import { Flight } from "src/Domain/Flight/Flight";
 import { FlightEventHandler } from "src/EventHandler/Flight";
-import { FindPersonService } from "src/Infrastructure/AirplanePerson/FindPerson.service";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Flight]), HttpModule],
+    imports: [
+        TypeOrmModule.forFeature([Flight]),
+        ClientsModule.register([{name: 'RMQ_CLIENT', transport: Transport.RMQ }]),
+    ],
     controllers: [FlightController, FlightEventHandler],
-    providers: [CreateFlightService, CreateReservationService, FindPersonService, CancelReservationService, CancelReservationsByPersonService],
+    providers: [CreateFlightService, CreateReservationService, CancelReservationService, CancelReservationsByPersonService],
     exports: []
 })
 

@@ -1,7 +1,6 @@
 todo: 
 
-    check to see if when I am booking a reservation, if when I delete a person 
-    does it stall and wait for the booking to be done before it can grab the flight?
+    remove the HTTP request, and turn it into a long running process that checks to see if the user exists after the reservation has been made --> this solves the problem
 
     look at anti-corruption layer and see if I'm doing it right
 

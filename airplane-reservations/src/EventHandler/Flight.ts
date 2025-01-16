@@ -18,6 +18,7 @@ export class FlightEventHandler {
 
     @MessagePattern('PersonExistsCheck')
     public async validateReservationViaMessage(data: DoesPersonExistDTO) {
+        console.log(data)
         if (!data.getFound()) {
             await this.cancelReservationViaMessage(data.getPersonId())
         }

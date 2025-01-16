@@ -3,15 +3,16 @@ import { EventPattern } from "@nestjs/microservices";
 import { UUID } from "crypto";
 import { FindPersonService } from "src/Application/Person/FindPersonService";
 
-@Controller('person')
-export class PersonController {
+@Controller('personEventHandler')
+export class PersonEventHandler {
     constructor(
         private findPersonService: FindPersonService,
     ) {}
 
-    @Get(':id')
     @EventPattern('PersonExistsCheck')
     public async doesPersonExist(data: UUID) {
+        console.log('here!')
+        console.log(data)
         return await this.findPersonService.doesPersonExist(data)
     }
 }

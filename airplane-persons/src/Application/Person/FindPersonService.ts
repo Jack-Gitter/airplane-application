@@ -1,7 +1,7 @@
 import { NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UUID } from "crypto";
-import { DoesPersonExistDTO } from "src/Controller/Person/DTO/DoesPersonExistDTO";
+import { DoesPersonExistDTO } from "src/EventHandler/DTO/DoesPersonExistDTO";
 import { Person } from "src/Domain/Person/Person";
 import { Repository } from "typeorm";
 

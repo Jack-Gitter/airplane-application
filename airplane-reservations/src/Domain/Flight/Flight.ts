@@ -1,10 +1,11 @@
 import { UUID } from "crypto";
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Reservation } from "./Entities/Reservation/Reservation";
 import { Seat } from "./Entities/Reservation/Seat";
 import { SeatPosition } from "./ValueObjects/SeatPosition";
 import { BadRequestException } from "@nestjs/common";
 import { FLIGHT_STATUS } from "./FlightEnums";
+import { FlightSchedule } from "../FlightSchedule/FlightSchedule";
 
 @Entity('Flight')
 export class Flight {
@@ -14,6 +15,9 @@ export class Flight {
 
     @Column({type: 'enum', enum: FLIGHT_STATUS, default: FLIGHT_STATUS.ON_TIME})
     public status: FLIGHT_STATUS
+
+    @OneToOne(() => FlightSchedule, (flightSchedule) => flightSchedule.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
+    public schedule: UUID
 
     @OneToMany(() => Reservation, (reservation) => reservation.flight, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
     public reservations: Array<Reservation>

@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
 import { Location } from "../ValueObjects/Location"
 import { UUID } from "crypto"
-import { Flight } from "../../Flight/Flight"
+import { FlightSchedule } from "../FlightSchedule"
 
 @Entity('Segment')
 export class Segment {
@@ -9,41 +9,25 @@ export class Segment {
     @PrimaryGeneratedColumn('uuid')
     public id: UUID
 
-    @ManyToOne(() => Flight, (flight) => flight.id)
-    public flight: UUID
+    @ManyToOne(() => FlightSchedule, (flightSchedule) => flightSchedule.segments, {orphanedRowAction: 'delete'})
+    public scheduleId: UUID
 
     @Column(() => Location)
-    private to: Location
+    public to: Location
 
     @Column(() => Location)
-    private from: Location
+    public from: Location
 
     @Column()
-    private start: Date
+    public start: Date
 
     @Column()
-    private end: Date
+    public end: Date
 
     constructor(to: Location, from: Location, start: Date, end: Date) {
         this.to = to
         this.from = from
         this.start = start
         this.end = end
-    }
-
-    public getToCopy(): Location {
-        return this.to
-    }
-
-    public getFromCopy(): Location {
-        return this.from
-    }
-
-    public getStartCopy(): Date {
-        return new Date(this.start)
-    }
-
-    public getEndCopy(): Date {
-        return new Date(this.end)
     }
 }

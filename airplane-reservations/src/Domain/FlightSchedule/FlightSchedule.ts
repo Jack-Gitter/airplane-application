@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Segment } from "./Entity/Segment";
 import { UUID } from "crypto";
+import { Flight } from "../Flight/Flight";
 
 @Entity('FlightSchedule')
 export class FlightSchedule {
@@ -8,7 +9,10 @@ export class FlightSchedule {
     @PrimaryGeneratedColumn('uuid')
     public id: UUID
 
-    @OneToMany(() => Segment, (segment) => segment.flight, { cascade: true, onDelete: 'CASCADE' })
+    @OneToOne(() => Flight, (flight) => flight.schedule, { orphanedRowAction: 'delete' } )
+    public flight: UUID
+
+    @OneToMany(() => Segment, (segment) => segment.scheduleId, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
     public segments: Array<Segment>
 
     private constructor(segments: Array<Segment>) {
@@ -17,6 +21,10 @@ export class FlightSchedule {
 
     public CreateFlightSchedule(): FlightSchedule {
         return new FlightSchedule(new Array())
+    }
+
+    public addSegment(flightId: UUID) {
+
     }
 
 }

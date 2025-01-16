@@ -10,7 +10,6 @@ import { Repository } from "typeorm";
 export class FlightScheduleEventHandler {
 
     constructor(
-        @InjectRepository(FlightSchedule) private flightScheduleRepository: Repository<FlightSchedule>,
         private checkScheduleService: CheckScheduleService,
         private eventEmitter: EventEmitter2
     ) {}

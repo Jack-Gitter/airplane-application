@@ -81,4 +81,50 @@ describe(Flight.name, () => {
         expect(() => flight.cancelReservation(seatPosition, personId)).toThrow(BadRequestException)
     })
 
+    test('Canceling a reservation by person works properly', () => {
+        const personId = randomUUID()
+
+        const seatRow1 = 1
+        const seatCol1 = SEAT_COLUMN.A
+        const seatPosition = new SeatPosition(seatRow1, seatCol1)
+
+        const seatRow2 = 2
+        const seatCol2 = SEAT_COLUMN.A
+        const seatPosition2 = new SeatPosition(seatRow2, seatCol2)
+
+        const personId2 = randomUUID()
+        const seatRow3 = 3
+        const seatCol3 = SEAT_COLUMN.A
+
+        const seatPosition3 = new SeatPosition(seatRow3, seatCol3)
+
+        flight.makeReservation(seatPosition, personId)
+        flight.makeReservation(seatPosition2, personId)
+        flight.makeReservation(seatPosition3, personId2)
+
+        expect(flight.reservations).toHaveLength(3)
+
+        flight.cancelReservationsByPerson(personId)
+
+        expect(flight.reservations).toHaveLength(1)
+
+    })
+
+    test('Throws error if there are no reservations on the flight', () => {
+        expect(() => flight.cancelReservationsByPerson(randomUUID())).toThrow(BadRequestException)
+    })
+
+    test('Throws error if there are no reservations for the specific user on the flight', () => {
+        const personId = randomUUID()
+
+        const seatRow = 1
+        const seatCol = SEAT_COLUMN.A
+        const seatPosition = new SeatPosition(seatRow, seatCol)
+
+        flight.makeReservation(seatPosition, personId)
+
+        expect(() => flight.cancelReservationsByPerson(randomUUID())).toThrow(BadRequestException)
+
+    })
+
 })

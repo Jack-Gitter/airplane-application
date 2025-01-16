@@ -1,7 +1,5 @@
 todo: 
 
-    remove the HTTP request, and turn it into a long running process that checks to see if the user exists after the reservation has been made --> this solves the problem
-
     look at anti-corruption layer and see if I'm doing it right
 
     implement the rest of the functionality

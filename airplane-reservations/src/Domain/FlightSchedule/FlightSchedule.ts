@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Segment } from "./Entity/Segment";
 import { UUID } from "crypto";
 import { Flight } from "../Flight/Flight";
@@ -21,10 +21,6 @@ export class FlightSchedule {
 
     public static CreateFlightSchedule(): FlightSchedule {
         return new FlightSchedule(new Array())
-    }
-
-    public addSegment(flightId: UUID) {
-
     }
 
 }

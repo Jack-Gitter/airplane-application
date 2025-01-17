@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
 import { Location } from "../ValueObjects/Location"
-import { UUID } from "crypto"
+import { randomUUID, UUID } from "crypto"
 import { FlightSchedule } from "../FlightSchedule"
 import { BadRequestException } from "@nestjs/common"
 
@@ -29,6 +29,7 @@ export class Segment {
         if (start > end) {
             throw new BadRequestException(`Cannot have start > end`)
         }
+        this.id = randomUUID()
         this.to = to
         this.from = from
         this.start = start

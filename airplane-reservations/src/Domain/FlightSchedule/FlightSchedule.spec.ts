@@ -38,6 +38,5 @@ describe(FlightSchedule.name, () => {
         flightSchedule.addSegment(segment)
         expect(flightSchedule.segments).toHaveLength(1)
         expect(() => flightSchedule.addSegment(segment2)).toThrow(BadRequestException)
-        
     })
 })

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Post } from "@nestjs/common";
 import { CancelFlightScheduleService } from "src/Application/FlightSchedule/CancelFlightSchedule.service";
 import { CreateFlightScheduleService } from "src/Application/FlightSchedule/CreateSchedule.service";
-import { CancelFlightScheduleDTO } from "./CancelFlightScheduleDTO";
+import { CancelFlightScheduleDTO } from "./Dto/CancelFlightScheduleDTO";
 
 @Controller('flightSchedule')
 export class FlightScheduleController {

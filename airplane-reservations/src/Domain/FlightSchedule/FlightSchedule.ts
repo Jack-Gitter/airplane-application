@@ -36,13 +36,13 @@ export class FlightSchedule {
         this.segments.push(segment)
     }
 
-    public removeSegment(segment: Segment) {
+    public removeSegment(segmentId: UUID) {
         const startingSegmentCount = this.segments.length
-        this.segments = this.segments.filter((existingSegment) => segment.id === existingSegment.id)
+        this.segments = this.segments.filter((existingSegment) => segmentId === existingSegment.id)
         const currentSegmentCount = this.segments.length
 
         if (startingSegmentCount === currentSegmentCount) {
-            throw new BadRequestException(`No segment exists with the given id ${segment.id}`)
+            throw new BadRequestException(`No segment exists with the given id ${segmentId}`)
         }
     }
 

@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from
 import { Location } from "../ValueObjects/Location"
 import { UUID } from "crypto"
 import { FlightSchedule } from "../FlightSchedule"
+import { BadRequestException } from "@nestjs/common"
 
 @Entity('Segment')
 export class Segment {
@@ -25,6 +26,9 @@ export class Segment {
     public end: Date
 
     constructor(to: Location, from: Location, start: Date, end: Date) {
+        if (start > end) {
+            throw new BadRequestException(`Cannot have start > end`)
+        }
         this.to = to
         this.from = from
         this.start = start

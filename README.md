@@ -1,7 +1,8 @@
 testing: 
 todo: 
     implement the rest of the functionality
-        implement adding segments to a flightschedule
+        test adding segments
+        test deleting segments
         implement removing segments from a flightschedule
         implement CQRS for retrieval of information
 

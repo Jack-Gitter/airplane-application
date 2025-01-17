@@ -4,6 +4,8 @@ import { CreateFlightScheduleService } from "src/Application/FlightSchedule/Crea
 import { CancelFlightScheduleDTO } from "./Dto/CancelFlightScheduleDTO";
 import { AddSegmentService } from "src/Application/FlightSchedule/AddSegment.service";
 import { AddSegmentDTO } from "./Dto/AddSegmentDTO";
+import { RemoveSegmentDTO } from "./Dto/DeleteSegmentDTO";
+import { RemoveSegmentService } from "src/Application/FlightSchedule/RemoveSegment.service";
 
 @Controller('flightSchedule')
 export class FlightScheduleController {
@@ -11,7 +13,8 @@ export class FlightScheduleController {
     constructor(
         private createFlightScheduleService: CreateFlightScheduleService,
         private cancelFlightScheduleService: CancelFlightScheduleService,
-        private addSegmentService: AddSegmentService
+        private addSegmentService: AddSegmentService,
+        private removeSegmentService: RemoveSegmentService
     ) { }
 
     @Post()
@@ -37,6 +40,11 @@ export class FlightScheduleController {
             addSegmentDTO.start,
             addSegmentDTO.end
         )
+    }
+
+    @Delete('segment')
+    public async removeSegment(@Body() removeSegmentDTO: RemoveSegmentDTO) {
+        return await this.removeSegmentService.removeSegment(removeSegmentDTO.scheduleId, removeSegmentDTO.segmentId)
     }
 
 }

@@ -14,7 +14,6 @@ export class RemoveSegmentService {
         await this.flightScheduleRepository.manager.transaction(async (entityManager) => {
             const flightScheduleRepository = entityManager.getRepository(FlightSchedule)
             const flightSchedule = await flightScheduleRepository.findOne({
-                lock: {mode: 'pessimistic_write'},
                 where: {id: scheduleID}
             })
 

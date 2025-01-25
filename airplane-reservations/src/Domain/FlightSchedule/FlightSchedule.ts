@@ -25,6 +25,11 @@ export class FlightSchedule {
     }
 
     public addSegment(segment: Segment) {
+        if (!this.segments) {
+            this.segments = new Array<Segment>()
+        }
+
+
         const overlapsWith = this.segments.find((existingSegment) => {
             return this.isOverlapping({start: existingSegment.start, end: existingSegment.end}, {start: segment.start, end: segment.end})
         })

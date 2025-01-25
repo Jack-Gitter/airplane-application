@@ -20,7 +20,7 @@ export class AddSegmentService {
             const flightScheduleRepository = entityManager.getRepository(FlightSchedule)
             
             const flightSchedule = await flightScheduleRepository.findOne({
-                lock: {mode: 'pessimistic_write'},
+                relations: ['segments'],
                 where: {id: scheduleId}
             })
 

@@ -1,4 +1,5 @@
-import { IsDate, IsNumber, IsString, IsUUID } from "class-validator"
+import { Type } from "class-transformer"
+import { IsDate, IsDateString, IsNumber, IsString, IsUUID } from "class-validator"
 import { UUID } from "crypto"
 
 export class AddSegmentDTO {
@@ -24,8 +25,10 @@ export class AddSegmentDTO {
     fromLatitude: number
 
     @IsDate()
+    @Type(() => Date)
     start: Date
 
     @IsDate()
+    @Type(() => Date)
     end: Date
 }

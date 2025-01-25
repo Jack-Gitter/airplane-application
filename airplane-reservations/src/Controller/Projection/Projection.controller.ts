@@ -10,7 +10,6 @@ export class ProjectionController {
 
     @Get('person/:id/flight')
     public async personalFlightDetails(@Param() personalFlightDetailsDTO: PersonalFlightDetailsDTO ) {
-        console.log(personalFlightDetailsDTO.id)
         return await this.projectionDAO.flightDetailsByPerson(personalFlightDetailsDTO.id)
     }
 

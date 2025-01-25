@@ -6,6 +6,8 @@ import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation"
 import { FlightSchedule } from "src/Domain/FlightSchedule/FlightSchedule";
 import { Segment } from "src/Domain/FlightSchedule/Entity/Segment";
 import { Flight } from "src/Domain/Flight/Flight";
+import { Location } from "src/Domain/FlightSchedule/ValueObjects/Location";
+import { SeatPosition } from "src/Domain/Flight/ValueObjects/SeatPosition";
 
 @Injectable()
 export class ProjectionDAO {
@@ -15,22 +17,24 @@ export class ProjectionDAO {
     public async flightDetailsByPerson(personId: UUID): Promise<PersonalFlightDetails[]> {
         
         const queryResults = await this.dataSource.createQueryBuilder()
-        .select()
+        .select('*')
         .from(Reservation, 'reservation')
         .where('reservation.personId = :personId', {personId})
         .leftJoinAndSelect(Flight, 'flight', 'flight.id = reservation."flightId"')
-        /*.leftJoinAndSelect(FlightSchedule, 'flightschedule', 'flightschedule.id = flight.schedule')
-        .leftJoinAndSelect(Segment, 'segment', 'segment."scheduleIdId" = flightschedule.id')*/
+        .leftJoinAndSelect(FlightSchedule, 'flightschedule', 'flightschedule.id = flight.schedule')
+        .leftJoinAndSelect(Segment, 'segment', 'segment."scheduleIdId" = flightschedule.id')
         .getRawMany()
-        console.log(queryResults)
 
-        console.log(queryResults)
         const personalFlightDetails: PersonalFlightDetails[] = []
 
-        /*for (const result of queryResults) {
-            const details = new PersonalFlightDetails(result.seatPosition, result.to, result.from)
+        for (const result of queryResults) {
+            console.log(result)
+            const to = new Location(result.toName, result.toLongitude, result.toLatitude)
+            const from = new Location(result.fromName, result.fromLongitude, result.fromLatitude)
+            const seatPosition = new SeatPosition(result.seatPositionRow, result.seatPositionColumn)
+            const details = new PersonalFlightDetails(seatPosition, to, from)
             personalFlightDetails.push(details)
-        }*/
+        }
 
         return personalFlightDetails
     }

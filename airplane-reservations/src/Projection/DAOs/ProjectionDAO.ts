@@ -20,15 +20,14 @@ export class ProjectionDAO {
         .select('*')
         .from(Reservation, 'reservation')
         .where('reservation.personId = :personId', {personId})
-        .leftJoinAndSelect(Flight, 'flight', 'flight.id = reservation."flightId"')
-        .leftJoinAndSelect(FlightSchedule, 'flightschedule', 'flightschedule.id = flight.schedule')
-        .leftJoinAndSelect(Segment, 'segment', 'segment."scheduleIdId" = flightschedule.id')
+        .innerJoin(Flight, 'flight', 'flight.id = reservation."flightId"')
+        .innerJoin(FlightSchedule, 'flightschedule', 'flightschedule.id = flight.schedule')
+        .innerJoin(Segment, 'segment', 'segment."scheduleIdId" = flightschedule.id')
         .getRawMany()
 
         const personalFlightDetails: PersonalFlightDetails[] = []
 
         for (const result of queryResults) {
-            console.log(result)
             const to = new Location(result.toName, result.toLongitude, result.toLatitude)
             const from = new Location(result.fromName, result.fromLongitude, result.fromLatitude)
             const seatPosition = new SeatPosition(result.seatPositionRow, result.seatPositionColumn)

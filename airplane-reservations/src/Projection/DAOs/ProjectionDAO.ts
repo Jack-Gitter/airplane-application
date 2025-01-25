@@ -3,7 +3,6 @@ import { UUID } from "crypto";
 import { DataSource } from "typeorm";
 import { PersonalFlightDetails } from "../ReadModels/PersonalFlightDetails";
 import { Reservation } from "src/Domain/Flight/Entities/Reservation/Reservation";
-import { Flight } from "src/Domain/Flight/Flight";
 import { FlightSchedule } from "src/Domain/FlightSchedule/FlightSchedule";
 import { Segment } from "src/Domain/FlightSchedule/Entity/Segment";
 
@@ -23,7 +22,7 @@ export class ProjectionDAO {
         .where('reservation.flight = flightSchedule.flight AND flightSchedule.id = segment.scheduleId')
         .getRawMany()
 
-
+        console.log(queryResults)
         const personalFlightDetails: PersonalFlightDetails[] = []
 
         for (const result of queryResults) {

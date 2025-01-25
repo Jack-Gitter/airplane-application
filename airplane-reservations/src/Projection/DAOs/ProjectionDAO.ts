@@ -27,13 +27,13 @@ export class ProjectionDAO {
 
         const personalFlightDetails: PersonalFlightDetails[] = []
 
-        for (const result of queryResults) {
+        queryResults.forEach(result => {
             const to = new Location(result.toName, result.toLongitude, result.toLatitude)
             const from = new Location(result.fromName, result.fromLongitude, result.fromLatitude)
             const seatPosition = new SeatPosition(result.seatPositionRow, result.seatPositionColumn)
             const details = new PersonalFlightDetails(seatPosition, to, from)
             personalFlightDetails.push(details)
-        }
+        })
 
         return personalFlightDetails
     }

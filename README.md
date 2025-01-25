@@ -1,9 +1,11 @@
+What is this project? 
+
+This is an attempt to create a (very oversimplified) Flight scheduling and user management utilizing DDD
+key points in this project are: 
+* The use of aggregates and concurrency control
+* The use of rich domain models instead of anemic domain models
+* Utilization of CQRS to make querying simple and efficient
+
 testing: 
 todo: 
-    implement the rest of the functionality
-        test adding segments
-        test deleting segments
-        implement removing segments from a flightschedule
-        implement CQRS for retrieval of information
-
     UX/UI and eventual consistency compensating actions
